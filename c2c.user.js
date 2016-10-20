@@ -30,11 +30,15 @@ var buttonHTML = ''
 $(document).ready(function () {
 	console.log('Starting Clickpocalypse2Clicker: ' + GM_info.script.version);
 
+	console.log('adding toolbar');
+
+	addToolbar();
+
 	setInterval(startAutoClicker, 1000);
 });
 
 function addToolbar() {
-	$('body').append(toolbarHTML);
+	$('body').append(styleHTML).append(toolbarHTML);
 }
 
 function startAutoClicker() {
