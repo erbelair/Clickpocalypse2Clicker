@@ -34,7 +34,7 @@ $(document).ready(function () {
 });
 
 function addToolbar() {
-
+	$('body').append(toolbarHTML);
 }
 
 function startAutoClicker() {
