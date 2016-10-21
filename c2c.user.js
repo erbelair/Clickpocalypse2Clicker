@@ -31,6 +31,7 @@ var btnScrollsPlus;
 var btnScrollsMinus;
 
 var infiniteScrollsPerSecond = 8;
+var maxScrollsPerSecond = 40;
 
 var minorButtons = [];
 var buttonsEnabled = false;
@@ -158,7 +159,7 @@ function updateInfScrollsPerSec() {
 }
 
 function incInfScrollsPerSec() {
-	if (buttonsEnabled && infiniteScrollsPerSecond < 10) {
+	if (buttonsEnabled && infiniteScrollsPerSecond < maxScrollsPerSecond) {
 		infiniteScrollsPerSecond++;
 		updateInfScrollsPerSec();
 	}
@@ -389,7 +390,6 @@ function startAutoClicker() {
 
 	//console.log("Total Scrolls:" +totalScrolls);
 
-
 	// click them scrolls
 	for (var i = 0; i < 6; i++) {
 
@@ -420,7 +420,6 @@ function startAutoClicker() {
 			}
 			
 			for (var t = 1; t < infiniteScrollsPerSecond; t++) {
-				console.log('firing scrolls in ' + (timeChange * t) + ' milliseconds.');
 				setTimeout(clickSelector, timeChange * t, scrollButton);
 			}
 			
