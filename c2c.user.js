@@ -30,8 +30,8 @@ var buttonsEnabled = false;
 
 var styleHTML = ' \
 	<style type="text/css"> \
-		.divC2Clicker { position: absolute; left: 50%; top: 740px; width: 1024px; margin-left: -512px; border: 1px solid #2B2B32; } \
-		.tblC2Clicker td { padding: 3px; } \
+		.divC2Clicker { position: absolute; left: 50%; top: 740px; width: 1024px; margin-left: -512px; border: 1px solid #2B2B32; padding: 1px; } \
+		.tblC2Clicker td { padding: 2px; } \
 		.clickerButton { height: 32px; padding: 2px; width: 100px; border: 1px solid #888; text-align: center; cursor: pointer; color: #fff; display: table-cell; vertical-align: middle; } \
     .clickerButton:hover { background-color: #2B2B32; } \
     .clickerButtonActive { background-color: rgba(255,170,0,0.4); border: 1px solid #FA0; } \
