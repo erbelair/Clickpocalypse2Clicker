@@ -3,7 +3,7 @@
 // @namespace   C2CT
 // @description Clicker Bot for Clickpocalypse2 with Toolbar
 // @include     http://minmaxia.com/c2/
-// @version     1.1.1
+// @version     1.1.2
 // @grant       none
 // @require https://code.jquery.com/jquery-3.1.0.slim.min.js
 // ==/UserScript==
@@ -39,13 +39,13 @@ var buttonsEnabled = false;
 var styleHTML = '\
 	<style type="text/css"> \
 		.divC2Clicker { position: absolute; left: 50%; top: 740px; width: 1020px; margin-left: -512px; border: 1px solid #2B2B32; padding: 1px; } \
-		.tblC2Clicker td { padding: 2px; } \
+		.tblC2Clicker > tbody > tr > td { padding: 2px; } \
 		.clickerButton { height: 32px; padding: 2px; width: 100px; border: 1px solid #888; text-align: center; cursor: pointer; color: #fff; display: table-cell; vertical-align: middle; } \
     	.clickerButton:hover { background-color: #2B2B32; } \
     	.clickerButtonActive { background-color: rgba(255,170,0,0.4); border: 1px solid #FA0; } \
 		.clickerButtonActive:hover { background-color: rgba(255,170,0,0.45); } \
     	.clickerButtonDisabled, .clickerButtonDisabled:hover { background: #000; border: 1px solid #2B2B32; cursor: default; color: #999; } \
-		.clickerButtonSmall { height: 15px; width: 15px; padding: 0px; } \
+		.clickerButtonSmall { height: 16px; width: 16px; padding: 0px; font-size: 11px; } \
     .clickerTextDisabled { color: #999; } \
 	</style> \
 ';
@@ -54,7 +54,7 @@ var toolbarHTML = '<div id="divC2Clicker" class="divC2Clicker"><table id="tblC2C
 
 var buttonHTML = '<td><div class="clickerButton clickerButtonDisabled"></div></td>';
 
-var scrollsHTML = '<td><table style="width: 120px;"><tr><td rowspan="2" style="padding-right: 4px;"><div class="clickerText clickerTextDisabled" style="text-align: center;">Inf. Scrolls / sec: <span id="spnInfScrollsPerSec" style="font-weight: bold;"></span></div></td><td style="padding: 1px;"><div class="clickerButton clickerButtonSmall clickerButtonDisabled">+</div></td></tr><tr><td style="padding: 1px;"><div class="clickerButton clickerButtonSmall clickerButtonDisabled">-</div></td></tr></table></td>';
+var scrollsHTML = '<td style="padding: 1px;"><table style="width: 120px;"><tr><td rowspan="2" style="padding-right: 3px;"><div class="clickerText clickerTextDisabled" style="text-align: center;">Inf. Scrolls / sec:<br/><span id="spnInfScrollsPerSec" style="font-weight: bold;"></span></div></td><td style="padding-bottom: 1px;"><div class="clickerButton clickerButtonSmall clickerButtonDisabled">+</div></td></tr><tr><td style="padding-top: 1px;"><div class="clickerButton clickerButtonSmall clickerButtonDisabled">-</div></td></tr></table></td>';
 
 $(document).ready(function () {
 	addToolbar();
@@ -331,7 +331,7 @@ function startAutoClicker() {
 				}
 
 				// Always click farm bonus or fast walking potions as soon as we get them, since they are useful anywhere.
-				if (potionName === 'Faster Infestation' || potionName === 'More Kills Per Farm' || potionName === 'Faster Farming' || potionName === 'Fast Walking') {
+				if (potionName === 'Faster Infestation' || potionName === 'More Kills Per Farm' || potionName === 'Faster Farming' || potionName === 'Fast Walking' || potionName === 'Frail Monsters' || potionName === 'Docile Monsters' || potionName === 'More Monsters') {
 					clickSelector(potionSelector);
 					continue;
 				}
