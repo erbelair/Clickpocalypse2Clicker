@@ -375,11 +375,15 @@ function startAutoClicker() {
 		// Spam spells if Infinite Scrolls potion is active.
 		if (scrollAmount === 'Infinite' || isPotionActive_InfinteScrolls) {
 
-			// 4 times per second
+			// 8 times per second
 			clickSelector(scrollButton);
+			setTimeout(clickSelector, 125, scrollButton);
 			setTimeout(clickSelector, 250, scrollButton);
+			setTimeout(clickSelector, 375, scrollButton);
 			setTimeout(clickSelector, 500, scrollButton);
+			setTimeout(clickSelector, 625, scrollButton);
 			setTimeout(clickSelector, 750, scrollButton);
+			setTimeout(clickSelector, 875, scrollButton);
 			continue;
 		}
 
