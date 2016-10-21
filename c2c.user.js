@@ -3,7 +3,7 @@
 // @namespace   C2CT
 // @description Clicker Bot for Clickpocalypse2 with Toolbar
 // @include     http://minmaxia.com/c2/
-// @version     1.1.0
+// @version     1.1.1
 // @grant       none
 // @require https://code.jquery.com/jquery-3.1.0.slim.min.js
 // ==/UserScript==
