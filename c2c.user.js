@@ -3,7 +3,7 @@
 // @namespace   C2CT
 // @description Clicker Bot for Clickpocalypse2 with Toolbar
 // @include     http://minmaxia.com/c2/
-// @version     1.1.2
+// @version     1.1.3
 // @grant       none
 // @require https://code.jquery.com/jquery-3.1.0.slim.min.js
 // ==/UserScript==
@@ -19,6 +19,7 @@ var btnAutoClicker;
 var skillsEnabled = false;
 var btnSkills;
 var potionsEnabled = false;
+var bossFightsEnabled = false;
 var btnPotions;
 var chestsEnabled = false;
 var btnChests;
@@ -35,6 +36,7 @@ var maxScrollsPerSecond = 40;
 
 var minorButtons = [];
 var buttonsEnabled = false;
+var bossFightsButtonEnabled = false;
 
 var styleHTML = '\
 	<style type="text/css"> \
@@ -66,8 +68,13 @@ function toggleAutoClicker() {
 		autoClickerInterval = setInterval(startAutoClicker, 1000);
 		btnAutoClicker.addClass('clickerButtonActive');
 		buttonsEnabled = true;
+		bossFightsButtonEnabled = true;
 		for (var i=0; i<minorButtons.length; i++) {
 			minorButtons[i].removeClass('clickerButtonDisabled');
+		}
+		if (!potionsEnabled) {
+			bossFightsButtonEnabled = false;
+			btnBossFights.addClass('clickerButtonDisabled');
 		}
 		$('div.clickerText').removeClass('clickerTextDisabled');
 	}
@@ -81,6 +88,7 @@ function toggleAutoClicker() {
 		}
 		$('div.clickerText').addClass('clickerTextDisabled');
 		buttonsEnabled = false;
+		bossFightsButtonEnabled = false;
 	}
 }
 
@@ -104,10 +112,29 @@ function togglePotions() {
 	  	if (potionsEnabled)
 		{
 			btnPotions.addClass('clickerButtonActive');
+			btnBossFights.removeClass('clickerButtonDisabled');
+			bossFightsButtonEnabled = true;
 		}
 	  	else
 		{
 			btnPotions.removeClass('clickerButtonActive');
+			btnBossFights.addClass('clickerButtonDisabled');
+			bossFightsButtonEnabled = false;
+		}
+	}
+}
+
+function toggleBossFights() {
+	if (bossFightsButtonEnabled) {
+		console.log('toggleBossfights ' + !bossFightsEnabled);
+		bossFightsEnabled = !bossFightsEnabled;
+	  	if (bossFightsEnabled)
+		{
+			btnBossFights.addClass('clickerButtonActive');
+		}
+	  	else
+		{
+			btnBossFights.removeClass('clickerButtonActive');
 		}
 	}
 }
@@ -186,6 +213,8 @@ function addButtons() {
 	minorButtons.push(btnSkills);
 	btnPotions = addButton(toolbar, "Toggle Potions", togglePotions);
 	minorButtons.push(btnPotions);
+	btnBossFights = addButton(toolbar, "Toggle Boss Fights Potion", toggleBossFights);
+	minorButtons.push(btnBossFights);
 	btnChests = addButton(toolbar, "Toggle Chests", toggleChests);
 	minorButtons.push(btnChests);
 	btnPoints = addButton(toolbar, "Toggle Points", togglePoints);
@@ -300,6 +329,9 @@ function startAutoClicker() {
 			if (potionName === 'Infinite Scrolls') {
 				isPotionActive_InfinteScrolls = potionActive;
 			}
+			if (!bossFightsEnabled && potionName === 'Random Boss Fights') {
+				clickSelector(potionSelector.find('.dropPotionButton'));
+			}
 
 		}
 	}
@@ -319,6 +351,11 @@ function startAutoClicker() {
 					continue;
 				}
 				if (potionActive) {
+					continue;
+				}
+				
+				if (!bossFightsEnabled && potionName === 'Random Boss Fights') {
+					clickSelector(potionSelector);
 					continue;
 				}
 
