@@ -150,14 +150,14 @@ function addButtons() {
 	var toolbar = $('#tblC2Clicker tr');
 
 	btnAutoClicker = addButton(toolbar, "Toggle AutoClicker", toggleAutoClicker).removeClass('clickerButtonDisabled');
+	btnUpgrades = addButton(toolbar, "Toggle Upgrades", toggleUpgrades);
+	minorButtons.push(btnUpgrades);
 	btnSkills = addButton(toolbar, "Toggle Skills", toggleSkills);
 	minorButtons.push(btnSkills);
 	btnPotions = addButton(toolbar, "Toggle Potions", togglePotions);
 	minorButtons.push(btnPotions);
 	btnChests = addButton(toolbar, "Toggle Chests", toggleChests);
 	minorButtons.push(btnChests);
-	btnUpgrades = addButton(toolbar, "Toggle Upgrades", toggleUpgrades);
-	minorButtons.push(btnUpgrades);
 	btnPoints = addButton(toolbar, "Toggle Points", togglePoints);
 	minorButtons.push(btnPoints);
 }
