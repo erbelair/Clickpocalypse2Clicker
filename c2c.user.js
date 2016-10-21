@@ -22,10 +22,15 @@ var potionsEnabled = false;
 var btnPotions;
 var chestsEnabled = false;
 var btnChests;
-var upgradesEnabled = false;
+var upgradesEnabled = true;
 var btnUpgrades;
 var pointsEnabled = false;
 var btnPoints;
+
+var btnScrollsPlus;
+var btnScrollsMinus;
+
+var infiniteScrollsPerSecond = 8;
 
 var minorButtons = [];
 var buttonsEnabled = false;
@@ -39,12 +44,16 @@ var styleHTML = '\
     	.clickerButtonActive { background-color: rgba(255,170,0,0.4); border: 1px solid #FA0; } \
 		.clickerButtonActive:hover { background-color: rgba(255,170,0,0.45); } \
     	.clickerButtonDisabled, .clickerButtonDisabled:hover { background: #000; border: 1px solid #2B2B32; cursor: default; color: #999; } \
+		.clickerButtonSmall { height: 15px; width: 15px; padding: 0px; } \
+    .clickerTextDisabled { color: #999; } \
 	</style> \
 ';
 
 var toolbarHTML = '<div id="divC2Clicker" class="divC2Clicker"><table id="tblC2Clicker" class="tblC2Clicker"><tr></tr></table></div>';
 
 var buttonHTML = '<td><div class="clickerButton clickerButtonDisabled"></div></td>';
+
+var scrollsHTML = '<td><table style="width: 120px;"><tr><td rowspan="2" style="padding-right: 4px;"><div class="clickerText clickerTextDisabled" style="text-align: center;">Inf. Scrolls / sec: <span id="spnInfScrollsPerSec" style="font-weight: bold;"></span></div></td><td style="padding: 1px;"><div class="clickerButton clickerButtonSmall clickerButtonDisabled">+</div></td></tr><tr><td style="padding: 1px;"><div class="clickerButton clickerButtonSmall clickerButtonDisabled">-</div></td></tr></table></td>';
 
 $(document).ready(function () {
 	addToolbar();
@@ -59,6 +68,7 @@ function toggleAutoClicker() {
 		for (var i=0; i<minorButtons.length; i++) {
 			minorButtons[i].removeClass('clickerButtonDisabled');
 		}
+		$('div.clickerText').removeClass('clickerTextDisabled');
 	}
 	else {
 		console.log('Stopping Clickpocalypse2Clicker: ' + GM_info.script.version);
@@ -68,6 +78,7 @@ function toggleAutoClicker() {
 		for (var i=0; i<minorButtons.length; i++) {
 			minorButtons[i].addClass('clickerButtonDisabled');
 		}
+		$('div.clickerText').addClass('clickerTextDisabled');
 		buttonsEnabled = false;
 	}
 }
@@ -142,6 +153,24 @@ function togglePoints() {
 	}
 }
 
+function updateInfScrollsPerSec() {
+	$('#spnInfScrollsPerSec').html(infiniteScrollsPerSecond);
+}
+
+function incInfScrollsPerSec() {
+	if (buttonsEnabled && infiniteScrollsPerSecond < 10) {
+		infiniteScrollsPerSecond++;
+		updateInfScrollsPerSec();
+	}
+}
+
+function decInfScrollsPerSec() {
+	if (buttonsEnabled && infiniteScrollsPerSecond > 1) {
+		infiniteScrollsPerSecond--;
+		updateInfScrollsPerSec();
+	}
+}
+
 function addButton(toolbar, buttonText, buttonAction) {
 	return $(buttonHTML).appendTo(toolbar).find('div.clickerButton').html(buttonText).click(buttonAction);
 }
@@ -151,6 +180,7 @@ function addButtons() {
 
 	btnAutoClicker = addButton(toolbar, "Toggle AutoClicker", toggleAutoClicker).removeClass('clickerButtonDisabled');
 	btnUpgrades = addButton(toolbar, "Toggle Upgrades", toggleUpgrades);
+	btnUpgrades.addClass('clickerButtonActive');
 	minorButtons.push(btnUpgrades);
 	btnSkills = addButton(toolbar, "Toggle Skills", toggleSkills);
 	minorButtons.push(btnSkills);
@@ -160,11 +190,18 @@ function addButtons() {
 	minorButtons.push(btnChests);
 	btnPoints = addButton(toolbar, "Toggle Points", togglePoints);
 	minorButtons.push(btnPoints);
+
+	var btnsScrolls = $(scrollsHTML).appendTo(toolbar);
+	btnScrollsPlus = btnsScrolls.find('div.clickerButtonSmall:eq(0)').click(incInfScrollsPerSec);
+	btnScrollsMinus = btnsScrolls.find('div.clickerButtonSmall:eq(1)').click(decInfScrollsPerSec);
+	minorButtons.push(btnScrollsPlus);
+	minorButtons.push(btnScrollsMinus);
 }
 
 function addToolbar() {
 	$('body').append(styleHTML).append(toolbarHTML);
 	addButtons();
+	updateInfScrollsPerSec();
 }
 
 function startAutoClicker() {
@@ -375,15 +412,19 @@ function startAutoClicker() {
 		// Spam spells if Infinite Scrolls potion is active.
 		if (scrollAmount === 'Infinite' || isPotionActive_InfinteScrolls) {
 
-			// 8 times per second
+			// use times per second to calc timeouts
 			clickSelector(scrollButton);
-			setTimeout(clickSelector, 125, scrollButton);
-			setTimeout(clickSelector, 250, scrollButton);
-			setTimeout(clickSelector, 375, scrollButton);
-			setTimeout(clickSelector, 500, scrollButton);
-			setTimeout(clickSelector, 625, scrollButton);
-			setTimeout(clickSelector, 750, scrollButton);
-			setTimeout(clickSelector, 875, scrollButton);
+			
+			var timeChange;
+			if (infiniteScrollsPerSecond > 1) {
+			  timeChange = 1000 / infiniteScrollsPerSecond;
+			}
+			
+			for (var t = 1; t < infiniteScrollsPerSecond; t++) {
+				console.log('firing scrolls in ' + (timeChange * t) + ' milliseconds.');
+				setTimeout(clickSelector, timeChange * t, scrollButton);
+			}
+			
 			continue;
 		}
 
