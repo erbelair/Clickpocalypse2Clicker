@@ -16,13 +16,13 @@ var scrollUpperBound = 29;
 
 var autoClickerInterval = null;
 var btnAutoClicker;
-var skillsEnabled = true;
+var skillsEnabled = false;
 var btnSkills;
-var potionsEnabled = true;
+var potionsEnabled = false;
 var btnPotions;
-var chestsEnabled = true;
+var chestsEnabled = false;
 var btnChests;
-var pointsEnabled = true;
+var pointsEnabled = false;
 var btnPoints;
 
 var minorButtons = [];
@@ -42,7 +42,7 @@ var styleHTML = ' \
 
 var toolbarHTML = '<div id="divC2Clicker" class="divC2Clicker"><table id="tblC2Clicker" class="tblC2Clicker"><tr></tr></table></div>';
 
-var buttonHTML = '<td><div class="clickerButton clickerButtonDisabled clickerButtonActive"></div></td>';
+var buttonHTML = '<td><div class="clickerButton clickerButtonDisabled"></div></td>';
 
 $(document).ready(function () {
 	addToolbar();
@@ -134,7 +134,7 @@ function addButton(toolbar, buttonText, buttonAction) {
 function addButtons() {
 	var toolbar = $('#tblC2Clicker tr');
 
-	btnAutoClicker = addButton(toolbar, "Toggle AutoClicker", toggleAutoClicker).removeClass('clickerButtonDisabled').removeClass('clickerButtonActive');
+	btnAutoClicker = addButton(toolbar, "Toggle AutoClicker", toggleAutoClicker).removeClass('clickerButtonDisabled');
 	btnSkills = addButton(toolbar, "Toggle Skills", toggleSkills);
 	minorButtons.push(btnSkills);
 	btnPotions = addButton(toolbar, "Toggle Potions", togglePotions);
