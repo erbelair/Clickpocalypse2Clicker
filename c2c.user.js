@@ -22,8 +22,8 @@ var potionsEnabled = false;
 var btnPotions;
 var chestsEnabled = false;
 var btnChests;
-var upgradesEnabled = true;
-var btnUpgrades;
+var monsterUpgradesEnabled = false;
+var btnMonsterUpgrades;
 var pointsEnabled = false;
 var btnPoints;
 
@@ -125,16 +125,16 @@ function toggleChests() {
 	}
 }
 
-function toggleUpgrades() {
+function toggleMonsterUpgrades() {
 	if (buttonsEnabled) {
-		upgradesEnabled = !upgradesEnabled;
-	  	if (upgradesEnabled)
+		monsterUpgradesEnabled = !monsterUpgradesEnabled;
+	  	if (monsterUpgradesEnabled)
 		{
-			btnUpgrades.addClass('clickerButtonActive');
+			btnMonsterUpgrades.addClass('clickerButtonActive');
 		}
 	  	else
 		{
-			btnUpgrades.removeClass('clickerButtonActive');
+			btnMonsterUpgrades.removeClass('clickerButtonActive');
 		}
 	}
 }
@@ -179,9 +179,8 @@ function addButtons() {
 	var toolbar = $('#tblC2Clicker tr');
 
 	btnAutoClicker = addButton(toolbar, "Toggle AutoClicker", toggleAutoClicker).removeClass('clickerButtonDisabled');
-	btnUpgrades = addButton(toolbar, "Toggle Upgrades", toggleUpgrades);
-	btnUpgrades.addClass('clickerButtonActive');
-	minorButtons.push(btnUpgrades);
+	btnMonsterUpgrades = addButton(toolbar, "Toggle Monster Upgrades", toggleMonsterUpgrades);
+	minorButtons.push(btnMonsterUpgrades);
 	btnSkills = addButton(toolbar, "Toggle Skills", toggleSkills);
 	minorButtons.push(btnSkills);
 	btnPotions = addButton(toolbar, "Toggle Potions", togglePotions);
@@ -256,10 +255,10 @@ function startAutoClicker() {
 	}
 
 	// Cycle though all quick bar upgrades in reverse order.
-	if (upgradesEnabled) {
-		for (var i = 43; i >= 0; i--) {
-			clickIt('#upgradeButtonContainer_' + i);
-		}
+	for (var i = 43; i >= 0; i--) {
+		if (monsterUpgradesEnabled || !checkForMonsterLevel('#upgradeButtonContainer_' + i)) {
+		 clickIt('#upgradeButtonContainer_' + i);
+	  }
 	}
 
 	// Level up character skills.
@@ -455,13 +454,21 @@ function startAutoClicker() {
 
 }
 
+function checkForMonsterLevel(divName) {
+	var div = $(divName);
+	if (!div.length) {
+		return true;
+	}
+	var upgradeName = div.find('td').eq(0).text();
+	return upgradeName.includes("Unlock Monster Level");
+}
+
 /*** Click by div id **/
 function clickIt(divName) {
 	var div = $(divName);
 	if (!div.length) {
 		return;
 	} // They use mouse up instead of click()
-
 	div.mouseup();
 }
 /*** Click by Selector **/
