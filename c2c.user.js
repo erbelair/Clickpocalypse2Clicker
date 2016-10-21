@@ -22,15 +22,17 @@ var potionsEnabled = false;
 var btnPotions;
 var chestsEnabled = false;
 var btnChests;
+var upgradesEnabled = false;
+var btnUpgrades;
 var pointsEnabled = false;
 var btnPoints;
 
 var minorButtons = [];
 var buttonsEnabled = false;
 
-var styleHTML = ' \
+var styleHTML = '\
 	<style type="text/css"> \
-		.divC2Clicker { position: absolute; left: 50%; top: 740px; width: 1024px; margin-left: -512px; border: 1px solid #2B2B32; padding: 1px; } \
+		.divC2Clicker { position: absolute; left: 50%; top: 740px; width: 1020px; margin-left: -512px; border: 1px solid #2B2B32; padding: 1px; } \
 		.tblC2Clicker td { padding: 2px; } \
 		.clickerButton { height: 32px; padding: 2px; width: 100px; border: 1px solid #888; text-align: center; cursor: pointer; color: #fff; display: table-cell; vertical-align: middle; } \
     	.clickerButton:hover { background-color: #2B2B32; } \
@@ -56,7 +58,6 @@ function toggleAutoClicker() {
 		buttonsEnabled = true;
 		for (var i=0; i<minorButtons.length; i++) {
 			minorButtons[i].removeClass('clickerButtonDisabled');
-			//minorButtons[i].click();
 		}
 	}
 	else {
@@ -88,11 +89,11 @@ function toggleSkills() {
 function togglePotions() {
 	if (buttonsEnabled) {
 		potionsEnabled = !potionsEnabled;
-	  if (potionsEnabled)
+	  	if (potionsEnabled)
 		{
 			btnPotions.addClass('clickerButtonActive');
 		}
-	  else
+	  	else
 		{
 			btnPotions.removeClass('clickerButtonActive');
 		}
@@ -102,13 +103,27 @@ function togglePotions() {
 function toggleChests() {
 	if (buttonsEnabled) {
 		chestsEnabled = !chestsEnabled;
-	  if (chestsEnabled)
+	  	if (chestsEnabled)
 		{
 			btnChests.addClass('clickerButtonActive');
 		}
-	  else
+	  	else
 		{
 			btnChests.removeClass('clickerButtonActive');
+		}
+	}
+}
+
+function toggleUpgrades() {
+	if (buttonsEnabled) {
+		upgradesEnabled = !upgradesEnabled;
+	  	if (upgradesEnabled)
+		{
+			btnUpgrades.addClass('clickerButtonActive');
+		}
+	  	else
+		{
+			btnUpgrades.removeClass('clickerButtonActive');
 		}
 	}
 }
@@ -116,11 +131,11 @@ function toggleChests() {
 function togglePoints() {
 	if (buttonsEnabled) {
 		pointsEnabled = !pointsEnabled;
-	  if (pointsEnabled)
+	  	if (pointsEnabled)
 		{
 			btnPoints.addClass('clickerButtonActive');
 		}
-	  else
+	  	else
 		{
 			btnPoints.removeClass('clickerButtonActive');
 		}
@@ -141,6 +156,8 @@ function addButtons() {
 	minorButtons.push(btnPotions);
 	btnChests = addButton(toolbar, "Toggle Chests", toggleChests);
 	minorButtons.push(btnChests);
+	btnUpgrades = addButton(toolbar, "Toggle Upgrades", toggleUpgrades);
+	minorButtons.push(btnUpgrades);
 	btnPoints = addButton(toolbar, "Toggle Points", togglePoints);
 	minorButtons.push(btnPoints);
 }
@@ -202,8 +219,10 @@ function startAutoClicker() {
 	}
 
 	// Cycle though all quick bar upgrades in reverse order.
-	for (var i = 43; i >= 0; i--) {
-		clickIt('#upgradeButtonContainer_' + i);
+	if (upgradesEnabled) {
+		for (var i = 43; i >= 0; i--) {
+			clickIt('#upgradeButtonContainer_' + i);
+		}
 	}
 
 	// Level up character skills.
