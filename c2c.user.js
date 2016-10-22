@@ -331,12 +331,14 @@ function startAutoClicker() {
 			}
 			if (!bossFightsEnabled && potionName === 'Random Boss Fights') {
 				clickSelector(potionSelector.find('.dropPotionButton'));
+				potionCount--;
+				col--;
 			}
 
 		}
 	}
 
-	//console.log ("AF: " +isPotionActive_ScrollsAutoFire +" IS: " +isPotionActive_InfinteScrolls +" Potion Count: " +potionCount );
+	console.log (formatDateTime(new Date()) + ": AF: " +isPotionActive_ScrollsAutoFire +" IS: " +isPotionActive_InfinteScrolls +" Potion Count: " +potionCount );
 
 	// Click them potions
 	if (potionsEnabled) {
@@ -510,4 +512,14 @@ function clickIt(divName) {
 /*** Click by Selector **/
 function clickSelector($selector) {
 	$selector.mouseup();
+}
+
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+function formatDateTime(dateTime) {
+	return (pad(dateTime.getMonth() + 1, 2)) + "/" + pad(dateTime.getDate(), 2) + "/" + dateTime.getFullYear() + " " + pad(dateTime.getHours(), 2) + ":" + pad(dateTime.getMinutes(), 2) + ":" + pad(dateTime.getSeconds(), 2) + "." + pad(dateTime.getMilliseconds(), 3);
 }
