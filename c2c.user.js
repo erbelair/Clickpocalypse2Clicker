@@ -3,7 +3,7 @@
 // @namespace   C2CT
 // @description Clicker Bot for Clickpocalypse2 with Toolbar
 // @include     http://minmaxia.com/c2/
-// @version     1.1.3
+// @version     1.1.4
 // @grant       none
 // @require https://code.jquery.com/jquery-3.1.0.slim.min.js
 // ==/UserScript==
@@ -338,7 +338,7 @@ function startAutoClicker() {
 		}
 	}
 
-	console.log (formatDateTime(new Date()) + ": AF: " +isPotionActive_ScrollsAutoFire +" IS: " +isPotionActive_InfinteScrolls +" Potion Count: " +potionCount );
+	console.log (formatDateTime(new Date()) + ": AutoFire=" +isPotionActive_ScrollsAutoFire +"; InfScrolls=" +isPotionActive_InfinteScrolls +"; PotionCount=" + potionCount );
 
 	// Click them potions
 	if (potionsEnabled) {
