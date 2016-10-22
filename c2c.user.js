@@ -338,7 +338,7 @@ function startAutoClicker() {
 		}
 	}
 
-	console.log (formatDateTime(new Date()) + ": AutoFire=" +isPotionActive_ScrollsAutoFire +"; InfScrolls=" +isPotionActive_InfinteScrolls +"; PotionCount=" + potionCount );
+	// console.log (formatDateTime(new Date()) + ": AutoFire=" +isPotionActive_ScrollsAutoFire +"; InfScrolls=" +isPotionActive_InfinteScrolls +"; PotionCount=" + potionCount );
 
 	// Click them potions
 	if (potionsEnabled) {
