@@ -3,7 +3,7 @@
 // @namespace   C2CT
 // @description Clicker Bot for Clickpocalypse2 with Toolbar
 // @include     http://minmaxia.com/c2/
-// @version     1.1.4
+// @version     1.1.5
 // @grant       none
 // @require https://code.jquery.com/jquery-3.1.0.slim.min.js
 // ==/UserScript==
@@ -329,11 +329,6 @@ function startAutoClicker() {
 			if (potionName === 'Infinite Scrolls') {
 				isPotionActive_InfinteScrolls = potionActive;
 			}
-			if (!bossFightsEnabled && potionName === 'Random Boss Fights') {
-				clickSelector(potionSelector.find('.dropPotionButton'));
-				potionCount--;
-				col--;
-			}
 
 		}
 	}
@@ -358,6 +353,7 @@ function startAutoClicker() {
 				
 				if (!bossFightsEnabled && potionName === 'Random Boss Fights') {
 					clickSelector(potionSelector);
+					setTimeout(clickSelector, 100, potionSelector.find('.dropPotionButton'));
 					continue;
 				}
 
